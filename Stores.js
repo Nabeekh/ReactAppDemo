@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import { StyleSheet, Text, View, Button, ScrollView } from 'react-native';
 import { AppRegistry, Image, TouchableOpacity, NavigatorIOS, RefreshControl, ActivityIndicator } from 'react-native';
 import {StackNavigator} from 'react-navigation';
+import StoreView from './storeDetailsModal';
+import PopupDialog, { DialogTitle , SlideAnimation}from 'react-native-popup-dialog';
+import StoreProducts from './StoreProducts'
 
 export default class Stores extends React.Component {
 	constructor(props) {
@@ -9,7 +12,9 @@ export default class Stores extends React.Component {
 		this.state = {
 			stores: [],
 			refreshing : false,
-			loader: true
+			loader: true,
+			showdetails: false,
+			selectedStore: {}
 		}
 	};
 	_handleBackPress() {
@@ -24,6 +29,13 @@ export default class Stores extends React.Component {
 			})
 		})
 	};
+	showproducts(){
+		this.props.navigator.push({
+			title: this.state.selectedStore.DisplayName+ ' Products',
+			component: StoreProducts,
+			passProps: {store: this.state.selectedStore}
+		});
+	}
 	_onRefresh() {
 		this.setState({refreshing: true});
 		this.getStores().then((data) => {
@@ -32,6 +44,22 @@ export default class Stores extends React.Component {
 				refreshing:false
 			})
 		})
+	}
+	viewDetails(storeobj){
+
+		let bool = this.state.showdetails? false: true
+		this.setState({
+			showdetails:bool,
+			selectedStore: storeobj
+		})
+		this.popupDialog.show(() => {
+			console.log('Show Dailouge')
+		});
+	}
+	closePopUp(){
+		this.popupDialog.dismiss(() => {
+			console.log('callback - will be called immediately')
+		});
 	}
 	getStores(){
 		return fetch('http://wcbit-dev.us-west-2.elasticbeanstalk.com/api/list/stores')
@@ -45,54 +73,71 @@ export default class Stores extends React.Component {
 	}
 	render(){
 		return (
-
-			<ScrollView style={{height: 300,flex: 1}}
+			<View style={styles.container}>
+			<PopupDialog
+			dialogTitle={<DialogTitle title={this.state.selectedStore.DisplayName} />}
+			ref={(popupDialog) => { this.popupDialog = popupDialog; }}
+			dialogAnimation={slideAnimation}
+			>
+			<StoreView showProducts={this.showproducts.bind(this)} store={this.state.selectedStore}/>
+			</PopupDialog>
+			<ScrollView style={{position: 'absolute',top: 0,left: 0,right: 0,bottom: 0}}
 			refreshControl={
-          <RefreshControl
-            refreshing={this.state.refreshing}
-            onRefresh={this._onRefresh.bind(this)}/>
-        }
-        >
-			<ActivityIndicator animating={this.state.loader} size="large" color="#0000ff"/>
-        
-			{
-				this.state.stores.map((store, index)=>{
-					return (
-					<View key={store._id}  style = {styles.item}>
-					<Image source={{uri : store.DisplayPicture}} style={styles.displayImage}/>
-					<Text style={{textAlign: 'right'}}>{store.DisplayName}</Text>
-					</View>
-					)
+				<RefreshControl
+				refreshing={this.state.refreshing}
+				onRefresh={this._onRefresh.bind(this)}/>}>
+
+				<ActivityIndicator animating={this.state.loader} size="large" color="#ba1013"/>
+
+				{
+					this.state.stores.map((store, index)=>{
+						return(
+
+							<TouchableOpacity key={store._id} activeOpacity={.9} onPress={this.viewDetails.bind(this, store)}>
+							<View style = {styles.item}>
+							<Image source={{uri : store.DisplayPicture}} style={styles.displayImage}/>
+							<Text>{store.DisplayName}</Text>
+							</View>
+							</TouchableOpacity>
+
+							)
 					})
-		}
-			</ScrollView>
-		)};
+
+				}
+				</ScrollView>
+				</View>
+				)
+	};
+}
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		backgroundColor: '#fff',
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+	contentContainer: {
+		paddingVertical: 20
+	},
+	displayImage: {
+		width: 100,
+		height: 100,
+		borderColor: '#2a4944',
+      	borderWidth: 1,
+	},
+	item: {
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		alignItems: 'center',
+		padding: 30,
+		margin: 2,
+		borderColor: '#2a4944',
+		borderWidth: 1,
+		backgroundColor: '#fff',
 	}
-
-	const styles = StyleSheet.create({
-		container: {
-			flex: 1,
-			backgroundColor: '#fff',
-			alignItems: 'center',
-			justifyContent: 'center',
-		},
-		contentContainer: {
-			paddingVertical: 20
-		},
-		displayImage: {
-			width: 100,
-			height: 100,
-			borderColor: '#2a4944',
-
-		},
-		item: {
-			flexDirection: 'row',
-			justifyContent: 'space-between',
-			alignItems: 'center',
-			padding: 30,
-			margin: 2,
-			borderColor: '#2a4944',
-			borderWidth: 1,
-			backgroundColor: '#fff',
-		}
-	});
+});
+const slideAnimation = new SlideAnimation({
+	toValue: 5,
+	slideFrom: 'bottom',
+});

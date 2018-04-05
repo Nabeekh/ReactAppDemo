@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, ImageBackground,TouchableHighlight, Animated, Vibration } from 'react-native';
+import { StyleSheet, Text, View, Button, ImageBackground,TouchableHighlight, Animated, Vibration, TextInput } from 'react-native';
 import { AppRegistry, Image, TouchableOpacity, NavigatorIOS,PropTypes,ActivityIndicator } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Stores from './Stores'
 export default class App extends React.Component {
 
@@ -25,7 +26,11 @@ class HomeScreen extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-    fadeAnim: new Animated.Value(0)  // Initial value for opacity: 0
+    fadeAnim: new Animated.Value(0),
+    userName: "nabeekh",
+    password: "techverx",
+    userNameinPut:'',
+    passwordInput: '',
   }
     PATTERN = [1, 2, 3, 2];
 
@@ -44,20 +49,40 @@ class HomeScreen extends React.Component{
     Vibration.vibrate(this.PATTERN) ;                     // Starts the animation
   }
   ViewStores() {
+    if(this.state.userName == this.state.userNameinPut & this.state.password == this.state.passwordInput){
       this.props.navigator.push({
       title: 'List Stores',
       component: Stores,
       rightButtonTitle: 'refresh',
       onRightButtonPress: function() {
-        alert('Refresh will be added later');
+        alert('Pull down to refresh List');
       }
     });
+    }else{
+       alert('Wrong Credentials!');
+    }
   }
 
   render() {
         return (
            <View style={styles.container}>
               <ImageBackground source={require('./assets/image6.jpeg')} style={styles.image}>
+              <KeyboardAwareScrollView 
+              style={{marginTop:350}}
+              resetScrollToCoords={{ x: 0, y: 0 }}
+              scrollEnabled={true}>
+              <TextInput
+              style={styles.input}
+              placeholder="Username"
+              onChangeText={(userNameinPut) => this.setState({userNameinPut})}
+              />
+              <TextInput
+               style={styles.input}
+              secureTextEntry={true}
+              placeholder="Password"
+              password={true}
+              onChangeText={(passwordInput) => this.setState({passwordInput})}
+              />
               <Animated.View style={{ opacity: this.state.fadeAnim}}>
               <TouchableHighlight
               style={styles.submit}
@@ -65,6 +90,7 @@ class HomeScreen extends React.Component{
               <Text style={styles.submitText}>Get Started</Text>
               </TouchableHighlight>
               </Animated.View>
+              </KeyboardAwareScrollView>
               </ImageBackground>
             </View>
     );
@@ -77,6 +103,16 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'stretch',
     justifyContent: 'center',
+  },
+  input:{
+    height: 80,
+    width: 350,
+    borderColor: '#ba1013',
+    borderWidth: 2,
+     marginTop: 10,
+    borderRadius: 10,
+    fontSize: 20,
+   backgroundColor: '#fff',
   },
   image: {
     flexGrow:1,
@@ -91,7 +127,7 @@ const styles = StyleSheet.create({
   submit:{
     marginRight:40,
     marginLeft:40,
-    marginTop:500,
+    marginTop:50,
     paddingTop:18,
     paddingBottom:18,
     paddingRight:15,
