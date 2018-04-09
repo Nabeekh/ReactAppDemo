@@ -1,8 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, ImageBackground,TouchableHighlight, Animated, Vibration, TextInput } from 'react-native';
 import { AppRegistry, Image, TouchableOpacity, NavigatorIOS,PropTypes,ActivityIndicator } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import Stores from './Stores'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { TabNavigator } from 'react-navigation';
+import Stores from './Stores';
+import About from './About';
+import Index from './index';
+import { NavigationComponent } from 'react-native-material-bottom-navigation'
 export default class App extends React.Component {
 
 
@@ -14,7 +18,7 @@ export default class App extends React.Component {
         component: HomeScreen,
         title: 'Welcome',
       }}
-      // navigationBarHidden={true}
+       navigationBarHidden={true}
       style={{flex: 1}}
       />
       );
@@ -51,12 +55,8 @@ class HomeScreen extends React.Component{
   ViewStores() {
     if(this.state.userName == this.state.userNameinPut & this.state.password == this.state.passwordInput){
       this.props.navigator.push({
-      title: 'List Stores',
-      component: Stores,
-      rightButtonTitle: 'refresh',
-      onRightButtonPress: function() {
-        alert('Pull down to refresh List');
-      }
+      title: 'Home',
+      component: Index
     });
     }else{
        alert('Wrong Credentials!');
@@ -143,4 +143,3 @@ const styles = StyleSheet.create({
     textAlign:'center',
   }
 });
-

@@ -25,7 +25,7 @@ export default class StoreProducts extends Component {
   };
     showAr(){
     this.props.navigator.push({
-      title: this.state.selectedStore.DisplayName+ ' Product',
+      title: this.state.selectedStore.DisplayName+ ' Products',
       component: StoreProducts
     });
   }
@@ -90,7 +90,7 @@ export default class StoreProducts extends Component {
     alignItems: 'center',
     justifyContent: 'center',
     height: 600,
-    marginTop: 70
+    marginTop: 20
   },
   contentContainer: {
     paddingVertical: 20

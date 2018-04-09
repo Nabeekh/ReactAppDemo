@@ -4,9 +4,25 @@ import { AppRegistry, Image, TouchableOpacity, NavigatorIOS, RefreshControl, Act
 import {StackNavigator} from 'react-navigation';
 import StoreView from './storeDetailsModal';
 import PopupDialog, { DialogTitle , SlideAnimation}from 'react-native-popup-dialog';
-import StoreProducts from './StoreProducts'
+import StoreProducts from './StoreProducts';
+export default class StoreIndex extends React.Component {
 
-export default class Stores extends React.Component {
+
+  render(){
+  
+  return (
+    <NavigatorIOS
+      initialRoute={{
+        component: Stores,
+        title: 'List Stores',
+      }}
+      style={{flex: 1}}
+      />
+      );
+  }
+}
+
+export class Stores extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -31,7 +47,7 @@ export default class Stores extends React.Component {
 	};
 	showproducts(){
 		this.props.navigator.push({
-			title: this.state.selectedStore.DisplayName+ ' Products',
+			title: this.state.selectedStore.DisplayName+ 'Products',
 			component: StoreProducts,
 			passProps: {store: this.state.selectedStore}
 		});
