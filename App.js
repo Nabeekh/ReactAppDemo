@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, ImageBackground,TouchableHighlight, Animated, Vibration, TextInput } from 'react-native';
-import { AppRegistry, Image, TouchableOpacity, NavigatorIOS,PropTypes,ActivityIndicator } from 'react-native';
+import { AppRegistry, AsyncStorage, Image, TouchableOpacity, NavigatorIOS,PropTypes,ActivityIndicator } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { TabNavigator } from 'react-navigation';
-import Stores from './Stores';
-import About from './About';
-import Index from './index';
+import Stores from './components/Stores';
+import About from './components/About';
+import Index from './components/index';
 import { NavigationComponent } from 'react-native-material-bottom-navigation'
 export default class App extends React.Component {
 
@@ -54,6 +54,7 @@ class HomeScreen extends React.Component{
   }
   ViewStores() {
     if(this.state.userName == this.state.userNameinPut & this.state.password == this.state.passwordInput){
+      this.saveUser(this.state.userName, this.state.password);
       this.props.navigator.push({
       title: 'Home',
       component: Index
@@ -63,10 +64,19 @@ class HomeScreen extends React.Component{
     }
   }
 
+   async saveUser(userName, password) {
+    try {
+      await AsyncStorage.setItem('@UserObj:User', JSON.stringify({userName: userName, password: password}));
+    } catch (error) {
+      console.log("Error saving data" + error);
+    }
+  }
+
   render() {
         return (
            <View style={styles.container}>
               <ImageBackground source={require('./assets/image6.jpeg')} style={styles.image}>
+              <Animated.View style={{ opacity: this.state.fadeAnim}}>
               <KeyboardAwareScrollView 
               style={{marginTop:350}}
               resetScrollToCoords={{ x: 0, y: 0 }}
@@ -83,14 +93,13 @@ class HomeScreen extends React.Component{
               password={true}
               onChangeText={(passwordInput) => this.setState({passwordInput})}
               />
-              <Animated.View style={{ opacity: this.state.fadeAnim}}>
               <TouchableHighlight
               style={styles.submit}
               onPress={this.ViewStores.bind(this)}>
               <Text style={styles.submitText}>Get Started</Text>
               </TouchableHighlight>
-              </Animated.View>
               </KeyboardAwareScrollView>
+              </Animated.View>
               </ImageBackground>
             </View>
     );

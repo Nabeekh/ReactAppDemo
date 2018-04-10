@@ -8,7 +8,7 @@ export default class About extends Component {
     return (
       <View style={{flex:1, marginTop:50}}>
       <ImageBackground
-       source={require('./assets/image4.jpeg')}
+       source={require('../assets/image4.jpeg')}
        style={styles.image}
        >
       <Card title="About App">
@@ -17,7 +17,7 @@ export default class About extends Component {
           <Image
             style={styles.displayImage}
             resizeMode="cover"
-           source={require('./assets/icon.png')}
+           source={require('../assets/icon.png')}
           />
           <Text style={styles.text}>This app represents the demo for React native aap for IOS. 
           Its simple. View stores, Get there visit card plus there products. Get the resonable price knowledge via this Awesome App.</Text>

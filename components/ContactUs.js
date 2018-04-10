@@ -13,7 +13,7 @@ export default class Contact  extends React.Component {
         		<Image
         		style={styles.displayImage}
         		resizeMode="cover"
-        		source={require('./assets/userAvatar.png')}
+        		source={require('../assets/userAvatar.png')}
         		/>
         		<Text style={styles.text}>Contact: 0920377223</Text>
         		<Text style={styles.text}>Email: email@gmail.com</Text>
@@ -23,21 +23,21 @@ export default class Contact  extends React.Component {
         		<Image
         		resizeMode="cover"
         		style={styles.socialIcon}
-        		source={require('./assets/facebook.png')}
+        		source={require('../assets/facebook.png')}
         		/>
         		</TouchableOpacity>
         		<TouchableOpacity>
         		<Image
         		style={styles.socialIcon}
         		resizeMode="cover"
-        		source={require('./assets/snapchat.png')}
+        		source={require('../assets/snapchat.png')}
         		/>
         		</TouchableOpacity>
         		<TouchableOpacity>
         		<Image
         		style={styles.socialIcon}
         		resizeMode="cover"
-        		source={require('./assets/instagram.jpg')}
+        		source={require('../assets/instagram.jpg')}
         		/>
         		</TouchableOpacity>
         		</View>
@@ -49,7 +49,7 @@ export default class Contact  extends React.Component {
         		<Image
         		style={styles.displayImage}
         		resizeMode="cover"
-        		source={require('./assets/bussinesAvatar.jpg')}
+        		source={require('../assets/bussinesAvatar.jpg')}
         		/>
         		<Text style={styles.text}>Contact: 0920377223</Text>
         		<Text style={styles.text}>Email: email@gmail.com</Text>
@@ -59,21 +59,21 @@ export default class Contact  extends React.Component {
         		<Image
         		resizeMode="cover"
         		style={styles.socialIcon}
-        		source={require('./assets/facebook.png')}
+        		source={require('../assets/facebook.png')}
         		/>
         		</TouchableOpacity>
         		<TouchableOpacity>
         		<Image
         		style={styles.socialIcon}
         		resizeMode="cover"
-        		source={require('./assets/snapchat.png')}
+        		source={require('../assets/snapchat.png')}
         		/>
         		</TouchableOpacity>
         		<TouchableOpacity>
         		<Image
         		style={styles.socialIcon}
         		resizeMode="cover"
-        		source={require('./assets/instagram.jpg')}
+        		source={require('../assets/instagram.jpg')}
         		/>
         		</TouchableOpacity>
         		</View>

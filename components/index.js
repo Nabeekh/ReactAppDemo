@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Tab from './navigation';
+import Tab from '../routes/navigation';
 
 export default class Index  extends React.Component {
     render(){

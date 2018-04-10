@@ -1,11 +1,12 @@
-import { Platform } from 'react-native';
+import { Platform, NavigatorIOS } from 'react-native';
 import React from 'react';
 
 import { TabNavigator, TabBarBottom } from 'react-navigation';
-import About from './About';
-import StoreIndex from './Stores';
-import StoreProducts from './StoreProducts';
-import Contact from './ContactUs';
+import About from '../components/About';
+import StoreIndex from '../components/Stores';
+import StoreProducts from '../components/StoreProducts';
+import Contact from '../components/ContactUs';
+import Settings from '../components/Settings';
 import Icon from 'react-native-vector-icons/FontAwesome';
 export default Tab = TabNavigator(
   {
@@ -25,6 +26,11 @@ export default Tab = TabNavigator(
           tabBarLabel: 'Contact us',
           tabBarIcon: () =><Icon name="compress" size={30} />,
         } },
+        Settings: { screen: Settings,
+          navigationOptions: {
+            tabBarLabel: 'Settings',
+            tabBarIcon: () =><Icon name="cogs" size={30} />,
+          } },
   },
   {
    tabBarPosition: "bottom",
