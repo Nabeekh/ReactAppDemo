@@ -1,6 +1,18 @@
-{"name":"Awesome",
+{"name":"ReactifyBuy",
   "expo": {
     "sdkVersion": "25.0.0",
-    "icon": "./assets/icon.png"
+    "icon": "./assets/iconSplash.png",
+    "version":"1.0.0",
+    "platforms":["ios"],
+    "orientation":"portrait",
+    "description":"This App let user view the best in best stores around and view there products for price informations. This is a demo App Dont consider using it. :)",
+  "splash":{
+  	"image":"./assets/iconSplash.png",
+  	"backgroundColor":"#ba1013",
+  	"hideExponentText": true,
+  },
+    "ios": {
+    	"bundleIdentifier": "com.techverx.nabeekh"
+    },
   }
 }
